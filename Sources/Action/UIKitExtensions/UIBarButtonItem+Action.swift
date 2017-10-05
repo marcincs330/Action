@@ -30,7 +30,7 @@ public extension Reactive where Base: UIBarButtonItem {
                     .bind(to: self.isEnabled)
                     .disposed(by: self.base.actionDisposeBag)
                 
-                self.tap.subscribe(onNext: { _ in
+                self.tap.subscribe(onNext: {
                     action.execute(())
                 })
                 .disposed(by: self.base.actionDisposeBag)

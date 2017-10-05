@@ -66,10 +66,8 @@ public final class Action<Input, Element> {
         errors = errorsSubject.asObservable()
         
         executionObservables = inputs
-            .withLatestFrom(enabled, resultSelector: { input, enabled in
-                return (input, enabled)
-            })
-            .flatMap { (input, enabled) -> Observable<Observable<Element>> in
+            .withLatestFrom(enabled) { input, enabled in (input, enabled) }
+            .flatMap { input, enabled -> Observable<Observable<Element>> in
                 if enabled {
                     return Observable.of(workFactory(input)
                                              .do(onError: { errorsSubject.onNext(.underlyingError($0)) })
